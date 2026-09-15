@@ -1,0 +1,7 @@
+{
+  "name": "SmartCounter AI",
+  "description": "AI-Powered Billing & Stock Assistant for Small Retail Stores with natural-language order entry, stock location tracking, and smart picking lists.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
+
