@@ -42,9 +42,9 @@ export const SettingsPage: FC<SettingsPageProps> = ({
     e.preventDefault();
     onUpdateSettings({
       ...settings,
-      shopName: shopName.trim() || 'Gupta General Store',
+      shopName: shopName.trim() || 'MSN Stores',
       tagline: tagline.trim(),
-      shopkeeperName: shopkeeperName.trim() || 'Ramesh Gupta',
+      shopkeeperName: shopkeeperName.trim() || 'Store Manager',
       address: address.trim(),
       phone: phone.trim(),
       currencySymbol: currencySymbol.trim() || '₹',

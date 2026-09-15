@@ -467,16 +467,16 @@ export const INITIAL_PRODUCTS: Product[] = [
 ];
 
 export const INITIAL_SETTINGS: ShopSettings = {
-  shopName: 'Shree Krishna Stores',
-  tagline: 'General Provisions, Fancy & Stationery',
+  shopName: 'MSN Stores',
+  tagline: 'General Provisions, Fancy & Daily Essentials',
   shopkeeperName: 'Ramesh Kumar',
   phone: '+91 98765 43210',
   address: 'Shop #14, Market Road, Bengaluru - 560001',
   currencySymbol: '₹',
-  upiId: 'shreekrishnastore@oksbi',
+  upiId: 'msnstores@oksbi',
   theme: 'light',
   enableSound: true,
-  receiptFooter: 'Thank you for shopping with us! Please visit again.',
+  receiptFooter: 'Thank you for shopping at MSN Stores! Please visit again.',
 };
 
 export const INITIAL_TRANSACTIONS: Transaction[] = [

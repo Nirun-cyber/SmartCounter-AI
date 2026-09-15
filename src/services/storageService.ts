@@ -204,7 +204,15 @@ export function getStoredSettings(): ShopSettings {
       initStorage();
       return INITIAL_SETTINGS;
     }
-    return { ...INITIAL_SETTINGS, ...JSON.parse(raw) };
+    const parsed = JSON.parse(raw);
+    const merged: ShopSettings = { ...INITIAL_SETTINGS, ...parsed };
+    // Auto-migrate legacy template store names to MSN Stores
+    if (merged.shopName === 'Shree Krishna Stores' || merged.shopName === 'Gupta General Store') {
+      merged.shopName = 'MSN Stores';
+      merged.receiptFooter = 'Thank you for shopping at MSN Stores! Please visit again.';
+      localStorage.setItem(STORAGE_KEYS.SETTINGS, JSON.stringify(merged));
+    }
+    return merged;
   } catch (err) {
     console.error('Failed to parse settings:', err);
     return INITIAL_SETTINGS;
