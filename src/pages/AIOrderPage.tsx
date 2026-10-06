@@ -29,12 +29,14 @@ interface AIOrderPageProps {
   settings: ShopSettings;
   onTransferToBill: (items: CartItem[]) => void;
   onOpenFindProduct: () => void;
+  onOpenStoreMap?: () => void;
 }
 
 const SAMPLE_ORDERS = [
   'Give me two Colgate, one Lux soap, and three Britannia biscuits',
   '3 Maggi, 2 Parle-G, and 1 Surf Excel',
   '1 Aashirvaad Atta, 2 Tata Tea and 1 Dettol liquid',
+  'Do packet Parle-G aur ek Surf Excel',
   '2 soap and 1 biscuit', // Ambiguous demo
 ];
 
@@ -43,6 +45,7 @@ export const AIOrderPage: FC<AIOrderPageProps> = ({
   settings,
   onTransferToBill,
   onOpenFindProduct,
+  onOpenStoreMap,
 }) => {
   const [inputText, setInputText] = useState('');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -468,9 +471,20 @@ export const AIOrderPage: FC<AIOrderPageProps> = ({
                     Smart Picking Route
                   </h3>
                 </div>
-                <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
-                  Rack & Shelf Optimized
-                </span>
+                <div className="flex items-center gap-2">
+                  {onOpenStoreMap && (
+                    <button
+                      id="btn-picking-map-view"
+                      onClick={onOpenStoreMap}
+                      className="flex items-center gap-1 rounded-md border border-indigo-200 bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-700 hover:bg-indigo-100 dark:border-indigo-800 dark:bg-indigo-950 dark:text-indigo-300"
+                    >
+                      <span>🗺️ View Map Route</span>
+                    </button>
+                  )}
+                  <span className="rounded-md bg-indigo-50 px-2 py-0.5 text-[10px] font-bold text-indigo-700 dark:bg-indigo-950 dark:text-indigo-300">
+                    Rack & Shelf Optimized
+                  </span>
+                </div>
               </div>
 
               <div

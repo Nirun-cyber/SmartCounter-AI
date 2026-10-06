@@ -44,6 +44,7 @@ export const NewBillPage: FC<NewBillPageProps> = ({
 }) => {
   const [searchTerm, setSearchTerm] = useState('');
   const [discount, setDiscount] = useState<number>(0);
+  const [cashTendered, setCashTendered] = useState<number>(0);
   const [paymentMethod, setPaymentMethod] = useState<PaymentMethod>('UPI');
   const [selectedCategory, setSelectedCategory] = useState<string>('All');
   const [insufficientStockError, setInsufficientStockError] = useState<string | null>(null);
@@ -571,6 +572,59 @@ export const NewBillPage: FC<NewBillPageProps> = ({
                   <span>UPI</span>
                 </button>
               </div>
+
+              {/* Cash Tender & Change Return Calculator */}
+              {paymentMethod === 'Cash' && grandTotal > 0 && (
+                <div className="mt-3 rounded-xl border border-stone-200 bg-stone-50/80 p-3 dark:border-stone-800 dark:bg-stone-800/40">
+                  <div className="flex items-center justify-between text-xs">
+                    <span className="font-bold text-stone-700 dark:text-stone-300">
+                      Cash Received:
+                    </span>
+                    <span className="font-mono font-bold text-stone-900 dark:text-white">
+                      {settings.currencySymbol}{cashTendered || grandTotal}
+                    </span>
+                  </div>
+
+                  <div className="mt-2 flex flex-wrap gap-1.5">
+                    {[grandTotal, 50, 100, 200, 500, 2000]
+                      .filter((amt, idx, arr) => amt >= grandTotal && arr.indexOf(amt) === idx)
+                      .slice(0, 5)
+                      .map((amt) => (
+                        <button
+                          key={amt}
+                          type="button"
+                          onClick={() => setCashTendered(amt)}
+                          className={`rounded-lg px-2.5 py-1 text-[11px] font-bold transition ${
+                            cashTendered === amt
+                              ? 'bg-emerald-600 text-white'
+                              : 'border border-stone-200 bg-white text-stone-700 hover:bg-stone-100 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300'
+                          }`}
+                        >
+                          {settings.currencySymbol}{amt}
+                        </button>
+                      ))}
+                  </div>
+
+                  {cashTendered > grandTotal && (
+                    <div className="mt-2.5 flex items-center justify-between rounded-lg bg-emerald-100/70 px-2.5 py-1.5 text-xs font-black text-emerald-800 dark:bg-emerald-950/60 dark:text-emerald-300">
+                      <span>Change to Return:</span>
+                      <span className="text-sm">
+                        {settings.currencySymbol}{cashTendered - grandTotal}
+                      </span>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* UPI Details Preview */}
+              {paymentMethod === 'UPI' && (
+                <div className="mt-2.5 rounded-xl border border-purple-200 bg-purple-50/70 p-2.5 text-center text-xs text-purple-900 dark:border-purple-900/60 dark:bg-purple-950/40 dark:text-purple-300">
+                  <p className="font-bold">MSN Stores UPI: <code>{settings.upiId}</code></p>
+                  <p className="text-[10px] text-purple-700 dark:text-purple-400 mt-0.5">
+                    Customer scans dynamic QR code on receipt
+                  </p>
+                </div>
+              )}
             </div>
 
             {/* COMPLETE BILL Action Button */}

@@ -18,6 +18,7 @@ interface HeaderProps {
   isAiDemoMode: boolean;
   onNavigate: (tab: any) => void;
   onOpenFindProduct: () => void;
+  onOpenStoreMap: () => void;
   onToggleTheme: () => void;
 }
 
@@ -28,6 +29,7 @@ export const Header: FC<HeaderProps> = ({
   isAiDemoMode,
   onNavigate,
   onOpenFindProduct,
+  onOpenStoreMap,
   onToggleTheme,
 }) => {
   const getTabTitle = () => {
@@ -46,6 +48,8 @@ export const Header: FC<HeaderProps> = ({
         return 'Sales Analytics';
       case 'settings':
         return 'Shop Settings';
+      case 'review1':
+        return 'Review 1 Project Dossier & Benchmarks';
       default:
         return 'SmartCounter AI';
     }
@@ -130,6 +134,35 @@ export const Header: FC<HeaderProps> = ({
         >
           <MapPin className="h-3.5 w-3.5 text-indigo-600 dark:text-indigo-400" />
           <span className="hidden sm:inline">Find Shelf</span>
+        </button>
+
+        {/* Store Map Quick Button */}
+        <button
+          id="header-store-map-btn"
+          onClick={onOpenStoreMap}
+          className="flex items-center gap-1.5 rounded-lg border border-stone-200 bg-stone-50 px-3 py-1.5 text-xs font-semibold text-stone-700 transition hover:border-indigo-300 hover:bg-indigo-50/50 hover:text-indigo-600 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-300 dark:hover:border-indigo-600 dark:hover:bg-stone-700"
+          title="View MSN Stores 2D Rack Layout & Pathfinder"
+        >
+          <span className="text-sm">🗺️</span>
+          <span className="hidden sm:inline">Store Map</span>
+        </button>
+
+        {/* Review 1 Milestone Hub Quick Button */}
+        <button
+          id="header-review1-btn"
+          onClick={() => onNavigate('review1')}
+          className={`flex items-center gap-1.5 rounded-lg px-2.5 py-1.5 text-xs font-bold transition ${
+            activeTab === 'review1'
+              ? 'bg-indigo-600 text-white dark:bg-indigo-500'
+              : 'border border-indigo-200 bg-indigo-50/70 text-indigo-700 hover:bg-indigo-100 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-300'
+          }`}
+          title="Review 1 Report: 45% Completed (Target: ≥40%)"
+        >
+          <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse" />
+          <span>Review 1</span>
+          <span className="rounded bg-emerald-500/20 px-1 py-0.2 text-[10px] font-extrabold text-emerald-700 dark:text-emerald-300">
+            45%
+          </span>
         </button>
 
         {/* Quick New Bill Button */}

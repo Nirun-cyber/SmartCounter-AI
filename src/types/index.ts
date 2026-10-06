@@ -93,6 +93,23 @@ export interface PickingItem {
   collected: boolean;
 }
 
+export interface BenchmarkCase {
+  id: string;
+  query: string;
+  expectedItemCount: number;
+  description: string;
+}
+
+export interface BenchmarkRunResult {
+  query: string;
+  itemsDetected: number;
+  latencyMs: number;
+  source: string;
+  model: string;
+  status: 'passed' | 'partial' | 'failed';
+  footstepSavingsPercent: number;
+}
+
 export type ActiveTab =
   | 'dashboard'
   | 'new-bill'
@@ -100,4 +117,5 @@ export type ActiveTab =
   | 'ai-order'
   | 'sales-history'
   | 'analytics'
-  | 'settings';
+  | 'settings'
+  | 'review1';

@@ -9,6 +9,7 @@ import {
   Settings,
   User,
   Zap,
+  Award,
 } from 'lucide-react';
 import { ActiveTab, ShopSettings } from '../types';
 
@@ -69,6 +70,13 @@ export const Sidebar: FC<SidebarProps> = ({
       label: 'Settings',
       icon: Settings,
       badge: null,
+    },
+    {
+      id: 'review1' as ActiveTab,
+      label: 'Review 1 Dossier',
+      icon: Award,
+      badge: '45%',
+      badgeType: 'success',
     },
   ];
 
@@ -147,6 +155,8 @@ export const Sidebar: FC<SidebarProps> = ({
                   className={`rounded-full px-2 py-0.5 text-xs font-bold ${
                     item.badgeType === 'warning'
                       ? 'bg-rose-100 text-rose-700 dark:bg-rose-950 dark:text-rose-300'
+                      : item.badgeType === 'success'
+                      ? 'bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-extrabold'
                       : 'bg-stone-200 text-stone-700 dark:bg-stone-800 dark:text-stone-300'
                   }`}
                 >

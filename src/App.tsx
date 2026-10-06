@@ -40,12 +40,15 @@ import { AIOrderPage } from './pages/AIOrderPage';
 import { SalesHistoryPage } from './pages/SalesHistoryPage';
 import { AnalyticsPage } from './pages/AnalyticsPage';
 import { SettingsPage } from './pages/SettingsPage';
+import { Review1Page } from './pages/Review1Page';
+import { StoreMapModal } from './components/StoreMapModal';
 import {
   History,
   BarChart3,
   Settings as SettingsIcon,
   X,
   Sparkles,
+  Award,
 } from 'lucide-react';
 
 export default function App() {
@@ -58,6 +61,7 @@ export default function App() {
 
   // Modals state
   const [isFindProductOpen, setIsFindProductOpen] = useState(false);
+  const [isStoreMapOpen, setIsStoreMapOpen] = useState(false);
   const [isAddStockOpen, setIsAddStockOpen] = useState(false);
   const [selectedProductForStock, setSelectedProductForStock] = useState<Product | null>(null);
   const [isProductFormOpen, setIsProductFormOpen] = useState(false);
@@ -133,6 +137,12 @@ export default function App() {
       if (e.key === 'f' || e.key === 'F') {
         e.preventDefault();
         setIsFindProductOpen(true);
+      } else if (e.key === 'm' || e.key === 'M') {
+        e.preventDefault();
+        setIsStoreMapOpen(true);
+      } else if (e.key === 'r' || e.key === 'R') {
+        e.preventDefault();
+        setActiveTab('review1');
       } else if (e.key === 'n' || e.key === 'N') {
         e.preventDefault();
         setActiveTab('new-bill');
@@ -296,6 +306,7 @@ export default function App() {
         isAiDemoMode={isAiDemoMode}
         onNavigate={setActiveTab}
         onOpenFindProduct={() => setIsFindProductOpen(true)}
+        onOpenStoreMap={() => setIsStoreMapOpen(true)}
         onToggleTheme={handleToggleTheme}
       />
 
@@ -324,6 +335,7 @@ export default function App() {
                 onSelectProduct={handleSelectProductForDetails}
                 onSelectTransaction={handleSelectTransactionForReceipt}
                 onOpenAddStock={handleOpenAddStock}
+                onOpenStoreMap={() => setIsStoreMapOpen(true)}
               />
             )}
 
@@ -355,6 +367,7 @@ export default function App() {
                 settings={settings}
                 onTransferToBill={handleTransferAiItemsToBill}
                 onOpenFindProduct={() => setIsFindProductOpen(true)}
+                onOpenStoreMap={() => setIsStoreMapOpen(true)}
               />
             )}
 
@@ -380,6 +393,15 @@ export default function App() {
                 onUpdateSettings={saveSettings}
                 onResetDatabase={resetToSeedData}
                 isAiDemoMode={isAiDemoMode}
+              />
+            )}
+
+            {activeTab === 'review1' && (
+              <Review1Page
+                products={products}
+                settings={settings}
+                onNavigate={setActiveTab}
+                onOpenStoreMap={() => setIsStoreMapOpen(true)}
               />
             )}
           </div>
@@ -450,6 +472,28 @@ export default function App() {
                 <SettingsIcon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
                 <span>Shop Settings</span>
               </button>
+
+              <button
+                onClick={() => {
+                  setIsStoreMapOpen(true);
+                  setIsMoreMenuOpen(false);
+                }}
+                className="flex w-full items-center gap-3 rounded-xl p-3 text-xs font-bold text-stone-700 transition hover:bg-stone-100 dark:text-stone-300 dark:hover:bg-stone-800"
+              >
+                <span className="text-base">🗺️</span>
+                <span>MSN Stores 2D Map</span>
+              </button>
+
+              <button
+                onClick={() => {
+                  setActiveTab('review1');
+                  setIsMoreMenuOpen(false);
+                }}
+                className="flex w-full items-center gap-3 rounded-xl border border-indigo-200 bg-indigo-50/70 p-3 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100 dark:border-indigo-900/60 dark:bg-indigo-950/40 dark:text-indigo-300"
+              >
+                <Award className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
+                <span>Review 1 Project Dossier (45%)</span>
+              </button>
             </div>
           </div>
         </div>
@@ -462,6 +506,13 @@ export default function App() {
         products={products}
         onAddToBill={handleAddProductToBill}
         currencySymbol={settings.currencySymbol}
+      />
+
+      {/* Interactive 2D Store Map & Pathfinder Modal */}
+      <StoreMapModal
+        isOpen={isStoreMapOpen}
+        onClose={() => setIsStoreMapOpen(false)}
+        highlightedItems={products}
       />
 
       {/* Add Stock Quick Modal */}

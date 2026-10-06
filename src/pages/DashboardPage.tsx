@@ -14,6 +14,7 @@ import {
   ChevronRight,
   PackageCheck,
   CheckCircle2,
+  Award,
 } from 'lucide-react';
 import { Product, ShopSettings, Transaction } from '../types';
 
@@ -25,6 +26,7 @@ interface DashboardPageProps {
   onSelectProduct: (product: Product) => void;
   onSelectTransaction: (transaction: Transaction) => void;
   onOpenAddStock: (product: Product) => void;
+  onOpenStoreMap?: () => void;
 }
 
 export const DashboardPage: FC<DashboardPageProps> = ({
@@ -35,6 +37,7 @@ export const DashboardPage: FC<DashboardPageProps> = ({
   onSelectProduct,
   onSelectTransaction,
   onOpenAddStock,
+  onOpenStoreMap,
 }) => {
   // Compute today's metrics
   const now = new Date();
@@ -94,6 +97,26 @@ export const DashboardPage: FC<DashboardPageProps> = ({
           >
             <Boxes className="h-4 w-4 text-stone-500" />
             <span>📦 Stock</span>
+          </button>
+
+          {onOpenStoreMap && (
+            <button
+              id="dash-action-store-map"
+              onClick={onOpenStoreMap}
+              className="flex items-center gap-2 rounded-xl border border-stone-200 bg-white px-3.5 py-2.5 text-xs font-bold text-stone-700 transition hover:bg-stone-100 active:scale-95 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-200 dark:hover:bg-stone-700"
+              title="View 2D Store Rack Layout & Pathfinder"
+            >
+              <span>🗺️ Store Map</span>
+            </button>
+          )}
+
+          <button
+            id="dash-action-review1"
+            onClick={() => onNavigate('review1')}
+            className="flex items-center gap-2 rounded-xl border border-indigo-200 bg-indigo-50/80 px-3.5 py-2.5 text-xs font-bold text-indigo-700 transition hover:bg-indigo-100 active:scale-95 dark:border-indigo-900/60 dark:bg-indigo-950/60 dark:text-indigo-300 dark:hover:bg-indigo-900"
+          >
+            <Award className="h-4 w-4 text-indigo-600 dark:text-indigo-400" />
+            <span>Review 1 (45%)</span>
           </button>
         </div>
       </div>
